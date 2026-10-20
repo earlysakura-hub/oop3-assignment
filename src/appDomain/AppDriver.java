@@ -38,6 +38,42 @@ public class AppDriver
             {
                 case "-f":
                     fileName = value;
+                    File file = new File(fileName);
+                    Scanner input = new Scanner(file);
+                    
+                    int count = Integer.parseInt(input.nextLine());
+                    
+                    Product[] products = new Product[count];
+                    
+                    for (int i = 0; i < count; i++) {
+                    	String line = input.nextLine();
+                    	String[] data = line.split(" ");
+                    	
+                    	String type = data[0];
+                    	double originalPrice = Double.parseDouble(data[1]);
+                    	double updatedPrice = Double.parseDouble(data[2]);
+                    	
+                    	if (type.equals("Jeans")) {
+                    		products[i] = new Jeans(originalPrice, updatedPrice);
+                    	} else if (type.equals("TShirts")) {
+                    		products[i] = new TShirts(originalPrice, updatedPrice);
+                    	} else if (type.equals("Skirts")) {
+                    		products[i] = new Skirts(originalPrice, updatedPrice);
+                    	} else if (type.equals("Dresses")) {
+                    		products[i] = new Dresses(originalPrice, updatedPrice);
+                    	} else if (type.equals("Shorts")) {
+                    		products[i] = new Shorts(originalPrice, updatedPrice);
+                    	} else if (type.equals("Jackets")) {
+                    		products[i] = new Jackets(originalPrice, updatedPrice);
+                    	} else if (type.equals("Shoes")) {
+                    		products[i] = new Shoes(originalPrice, updatedPrice);
+                    	} else {
+                    		System.out.println("Invalid product type: " + type);
+                    	}
+                    }
+                    
+                    input.close();
+                    
                     break;
 
                 case "-t":
