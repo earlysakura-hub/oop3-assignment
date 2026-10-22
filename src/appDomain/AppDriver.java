@@ -17,6 +17,8 @@ import products.TShirts;
 import utilities.BubbleSort;
 import utilities.HeapSort;
 import utilities.InsertionSort;
+import utilities.OriginalPriceComparator;
+import utilities.UpdatedPriceComparator;
 import utilities.MergeSort;
 import utilities.QuickSort;
 import utilities.SelectionSort;
@@ -412,8 +414,8 @@ public class AppDriver
     private static Comparator<Product> getComparator(char compareType) {
         Comparator<Product> comp;
         switch (compareType) {
-            case 'o': comp = Comparator.comparingDouble(Product::getOriginalPrice); break;
-            case 'u': comp = Comparator.comparingDouble(Product::getUpdatedPrice);  break;
+            case 'o': comp = new OriginalPriceComparator(); break;
+            case 'u': comp = new UpdatedPriceComparator();  break;
             default:  comp = Comparator.comparingDouble(Product::calcRealDiff);     break;
         }
         return comp;
