@@ -24,19 +24,36 @@ import utilities.QuickSort;
 import utilities.SelectionSort;
 
 /**
+ * Command-line driver for the product sorting assignment.
  * <p>
- * This application driver code is designed to be used as a basis for the
- * Complexity and Sorting assignment that will be developed in the CPRG304
- * class at SAIT. The implementors of this applications will be required
- * to add all the correct functionality.
- * </p>
+ * The program loads a list of {@link Product} objects from a text file, sorts
+ * them with a chosen algorithm and comparison criterion, prints selected
+ * elements of the sorted result, and reports how long the sort took.
+ * <p>
+ * Usage: {@code -f<file> -t<type> -s<algorithm>}, for example
+ * {@code -fres/products1.txt -tu -sq}.
+ * <ul>
+ *   <li>{@code -f}: path to the input file</li>
+ *   <li>{@code -t}: compare type: {@code o} (original price),
+ *       {@code u} (updated price), or {@code d} (real difference)</li>
+ *   <li>{@code -s}: sort algorithm: {@code b} (bubble), {@code s} (selection),
+ *       {@code i} (insertion), {@code m} (merge), {@code q} (quick), or
+ *       {@code z} (heap)</li>
+ * </ul>
  */
 public class AppDriver
 {
-    /**
+	/**
      * The main method is the entry point of the application.
+     * <p>
+     * Parses the {@code -f}, {@code -t}, and {@code -s} arguments (each value
+     * directly follows its flag, and flags are case-insensitive), loads the
+     * products, sorts them while timing the sort, and prints the results. If an
+     * argument is invalid or a required one is missing, a message is printed
+     * and the program returns without sorting.
      *
-     * @param args The input to control the execution of the application.
+     * @param args the command-line arguments: {@code -f<file>},
+     *             {@code -t<o|u|d>}, and {@code -s<b|s|i|m|q|z>}
      */
     public static void main(String[] args)
     {
@@ -395,7 +412,8 @@ public class AppDriver
     
     /**
      * Returns a {@link Comparator} that orders products by the value selected
-     * by the given comparison type, in ascending order.
+     * by the given comparison type, in ascending order. (The sort algorithms
+     * use this comparator to arrange the array from largest to smallest.)
      * <p>
      * The ordering is chosen by {@code compareType}:
      * <ul>
