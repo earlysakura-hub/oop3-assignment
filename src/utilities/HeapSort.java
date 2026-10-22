@@ -1,10 +1,11 @@
 package utilities;
 
 import java.util.Comparator;
+import products.Product;
 
 public class HeapSort {
 
-    public static <T> void sort(T[] array, Comparator<? super T> comparator) {
+    public static void sort(Product[] array, Comparator<Product> comparator) {
         int n = array.length;
 
         for (int i = n / 2 - 1; i >= 0; i--) {
@@ -12,7 +13,7 @@ public class HeapSort {
         }
 
         for (int i = n - 1; i > 0; i--) {
-            T temp = array[0];
+            Product temp = array[0];
             array[0] = array[i];
             array[i] = temp;
 
@@ -20,11 +21,11 @@ public class HeapSort {
         }
     }
 
-    private static <T> void heapify(
-            T[] array,
+    private static void heapify(
+            Product[] array,
             int size,
             int root,
-            Comparator<? super T> comparator) {
+            Comparator<Product> comparator) {
 
         int smallest = root;
         int left = 2 * root + 1;
@@ -41,15 +42,11 @@ public class HeapSort {
         }
 
         if (smallest != root) {
-            T temp = array[root];
+            Product temp = array[root];
             array[root] = array[smallest];
             array[smallest] = temp;
 
             heapify(array, size, smallest, comparator);
         }
-    }
-
-    public static <T extends Comparable<? super T>> void sort(T[] array) {
-        sort(array, Comparator.naturalOrder());
     }
 }
