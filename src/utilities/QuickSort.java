@@ -3,10 +3,14 @@ package utilities;
 import java.util.Comparator;
 import java.util.Objects;
 
+import products.Product;
+
 /**
  * Sorts arrays directly into descending order using quicksort with a median-of-three pivot.
+ * Uses Product arrays and a non-parameterized Comparator for this assignment.
  * Comparisons retain the normal Comparable and Comparator contracts.
  */
+@SuppressWarnings({"rawtypes", "unchecked"})
 public final class QuickSort {
     private QuickSort() {
     }
@@ -14,23 +18,26 @@ public final class QuickSort {
     /**
      * Sorts an array from largest to smallest using its natural ordering.
      *
-     * @param <T> the comparable element type
      * @param array the array to sort in place; elements must be non-null
      * @throws NullPointerException if the array is null
      */
-    public static <T extends Comparable<? super T>> void sort(T[] array) {
-        sort(array, Comparator.naturalOrder());
+    public static void sort(Product[] array) {
+        sort(array, new Comparator() {
+            @Override
+            public int compare(Object first, Object second) {
+                return ((Product) first).compareTo((Product) second);
+            }
+        });
     }
 
     /**
      * Sorts an array from largest to smallest according to the comparator.
      *
-     * @param <T> the element type
      * @param array the array to sort in place
      * @param comparator the comparison rule; a positive result means larger
      * @throws NullPointerException if the array or comparator is null
      */
-    public static <T> void sort(T[] array, Comparator<? super T> comparator) {
+    public static void sort(Product[] array, Comparator comparator) {
         Objects.requireNonNull(array, "Array must not be null");
         Objects.requireNonNull(comparator, "Comparator must not be null");
         quickSort(array, 0, array.length - 1, comparator);
@@ -40,17 +47,16 @@ public final class QuickSort {
      * Partitions an inclusive range in descending order. Recursing only on
      * the smaller partition limits stack depth; the larger one uses a loop.
      *
-     * @param <T> the element type
      * @param array the working array
      * @param low first index of the range
      * @param high last index of the range
      * @param comparator the comparison rule
      */
-    private static <T> void quickSort(T[] array, int low, int high,
-            Comparator<? super T> comparator) {
+    private static void quickSort(Product[] array, int low, int high,
+            Comparator comparator) {
         while (low < high) {
             int middle = low + (high - low) / 2;
-            T pivot = medianOfThree(array[low], array[middle], array[high], comparator);
+            Product pivot = medianOfThree(array[low], array[middle], array[high], comparator);
             int left = low;
             int right = high;
             while (left <= right) {
@@ -61,7 +67,7 @@ public final class QuickSort {
                     right--;
                 }
                 if (left <= right) {
-                    T temp = array[left];
+                    Product temp = array[left];
                     array[left] = array[right];
                     array[right] = temp;
                     left++;
@@ -81,22 +87,21 @@ public final class QuickSort {
     /**
      * Returns the median of the first, middle, and last values in a range.
      *
-     * @param <T> the element type
      * @param first the first value
      * @param middle the middle value
      * @param last the last value
      * @param comparator the comparison rule
      * @return the median value according to the comparator
      */
-    private static <T> T medianOfThree(T first, T middle, T last,
-            Comparator<? super T> comparator) {
+    private static Product medianOfThree(Product first, Product middle, Product last,
+            Comparator comparator) {
         if (comparator.compare(first, middle) > 0) {
-            T temp = first;
+            Product temp = first;
             first = middle;
             middle = temp;
         }
         if (comparator.compare(middle, last) > 0) {
-            T temp = middle;
+            Product temp = middle;
             middle = last;
             last = temp;
         }
